@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h2>{% block title %}{{display_title}}{% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+<br /> <br />
+<!-- Boutons qui permettent de filtrer par filiere-->
+
+{% if buttons %}
+<h3>Filtrer par filière : </h3>
+<div id = "flexbuttons" style = "display: flex; width:80%; margin:auto;">
+
+  {% for elem in buttons%}
+
+    <form style = "flex: 1 1 auto; width: 10%;" action="/integration?code_ecole={{code}}" method="post">
+      <input  class = "buttons" type="submit" name="filiere"  class="buttons" value={{elem}} /> <!-- Les boutons renvoient le nom de la filiere-->
+    </form>
+
+  {% endfor %}
+
+</div>
+
+{% endif %}
+
+<br />
+<br />
+
+ <!--Table contenant les infos du concours MT -->
+ <table>
+    <tr>
+    <th>Filiere</th> <th>Nb Places</th> <th>Nb Entrants</th> <th>Taux Filles</th> <th>Taux 3/2</th> <th>Taux Boursiers</th> <th>Rang 1er</th> <th>Moyenne 1er</th> <th>Rang Dernier</th> <th>Moyenne Dernier</th>
+    </tr>
+
+      <tr> <td>{{acc[0]}}</td>  <td>{{acc[1]}}</td>  <td>{{acc[2]}}</td>  <td>{{acc[3]}}</td>  <td>{{acc[4]}}</td>  <td>{{acc[5]}}</td>  <td>{{acc[6]}}</td>  <td>{{acc[7]}}</td> <td>{{acc[8]}}</td> <td>{{acc[9]}}</td>  </tr>
+
+  </table>
+  <br />
+  <br />
+
+<table>  <!-- Table d'affichage des candidats-->
+
+  <tr>
+
+  {% for title in headers%}
+    <th>{{title}}</th>                     <!-- Entêtes de la table -->
+  {% endfor %}
+
+  </tr>
+
+  {% for item in data %}
+
+    <tr>   <!-- Création d'un lien permettant d'aller directement sur le dossier du candidat -->
+
+        <td> {% if not ATS%} <a href="dossier?can_cod={{item[0]}}"> {% else %} <a href="dossier?can_cod={{item[0]}}&ATS=True"> {% endif %} {{item[0]}} </a> </td>  <td> {{item[1]}}</td> <td> {{item[2]}}</td> <td> {{item[3]}}</td>                        <!-- Cellules qui contiennent les données -->
+
+    </tr>
+
+  {% endfor %}
+
+</table>
+
+<br /> <br /> <br />
+
+{% endblock %}

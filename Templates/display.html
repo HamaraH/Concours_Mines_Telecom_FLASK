@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h2>{% block title %}{{display_title}}{% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+<br />
+
+<table>    <!-- Template généraliste qui permet d'afficher une table simple -->
+
+  <tr>
+
+  {% for title in headers%}
+    <th>{{title}}</th>                     <!-- Entêtes de la table -->
+  {% endfor %}
+
+  </tr>
+
+  {% for item in data %}
+
+    <tr>
+
+    {% for attribute in item %}
+      <td> {{attribute}}</td>             <!-- Cellules qui contiennent les données -->
+
+    {% endfor %}
+
+    </tr>
+
+  {% endfor %}
+
+</table>
+
+<br /> <br /> <br />
+
+{% endblock %}

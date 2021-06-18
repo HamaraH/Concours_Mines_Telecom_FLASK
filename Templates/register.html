@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h2>{% block title %}Inscription à la plateforme{% endblock %}</h2>
+{% endblock %}
+<!--Page de création de compte -->
+{% block content %}
+  <br />
+  <form action ="/login" method="post">
+    <input type = "email" name="mail" id="mail" placeholder="E-mail">
+    <input type="password" name="password" id="password"  placeholder="Password">
+    <input type="submit" value="Créer un compte">
+  </form>
+{% endblock %}

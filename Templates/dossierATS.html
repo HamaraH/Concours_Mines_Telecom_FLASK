@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+<!-- Template utilisé afin 1) qu'un élève consulte ses informations et les puisse les modifier 2) qu'un personnel administratif consulte les informations d'un élève -->
+{% block header %}
+  <h2>{% block title %}Dossier étudiant{% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+  <br />
+  <form action ="/dossier" method="post">
+
+     <!-- Le personnel administratif ne doit pas être capable de modifier les informations dans les inputs : readonly sous conditions -->
+
+    <input name="nom"  type = "text" id="nom" value = "{{data[0][0]}}" required {% if teacherView %}  readonly {% endif %}>
+    <input name="prenom" id="prenom"  value = "{{data[0][1]}}" required>
+    <input name="adresse"  type = "text" id="adresse" value = "{{data[0][2]}}" required {% if teacherView %}  readonly {% endif %}>
+    <input placeholder = "Complément d'adresse" type = "text" name="complement_adresse" id="complement_adresse"   {% if data[0][3] is not none %} value = "{{data[0][3]}}" {% endif %} {% if teacherView %}  readonly {% endif %}>
+    <input name="code_postal"  type = "text" id="code_postal" value = "{{data[0][4]}}" required {% if teacherView %}  readonly {% endif %}>
+    <input name="mail" id="mail"  type = "text" value = "{{data[0][5]}}" required {% if teacherView %}  readonly {% endif %}>
+    <input placeholder = "Numéro de téléphone fixe" name="numero_fixe"  type = "text" id="numero_fixe"  {% if data[0][6] is not none %} value = "{{data[0][6]}}" {% endif %} {% if teacherView %}  readonly {% endif %}>
+    <input placeholder = "Numéro de téléphone portable" name="numero_portable"  type = "text" id="numero_portable"  {% if data[0][7] is not none %} value = "{{data[0][7]}}" {% endif %} {% if teacherView %}  readonly {% endif %}>
+
+    <!-- Le personnel administratif ne doit pas être capable de valider le form -->
+    {% if not teacherView %}
+      <input type="submit" value="Enregistrer les modifications">
+    {% endif %}
+  </form>
+
+
+
+
+
+{% endblock %}

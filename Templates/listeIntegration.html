@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h2>{% block title %}{{display_title}}{% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+<br /> <br />
+
+<!-- Barre de recherche par ecole-->
+<h3> Rechercher une école en particulier : </h3>
+
+<form action ="/integration" method="GET">
+  <input placeholder = "Code de l'école" name="code_ecole"  type = "text" id="code_ecole" required>
+  <input type="submit" value="Rechercher l'école">
+</form>
+
+<table>  <!-- Table d'affichage des candidats-->
+
+  <tr>
+
+  {% for title in headers%}
+    <th>{{title}}</th>                     <!-- Entêtes de la table -->
+  {% endfor %}
+
+  </tr>
+
+  {% for item in data %}
+
+    <tr>   <!-- Création d'un lien permettant d'aller directement sur le dossier du candidat -->
+
+      <td> <a href="integration?code_ecole={{item[0]}}"> {{item[0]}} </a> </td>  <td> {{item[1]}}</td>                      <!-- Cellules qui contiennent les données -->
+
+
+    </tr>
+
+  {% endfor %}
+
+</table>
+
+<br /> <br /> <br />
+
+{% endblock %}

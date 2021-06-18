@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h2>{% block title %}Notes obtenues au(x) concours{% endblock %}</h2>
+
+{% endblock %}
+
+{% block content %}
+{% if data %}
+  <div class="toPdf">  <!-- Bouton d'export PDF-->
+    <form class="formPdf" action = "/toPDF" method = "POST">
+      <input class = "PDF" name = "notes" type="submit" value = "PDF">
+    </form>
+  </div>
+  <!--Table contenant les infos du concours MT -->
+  <table>
+    <tr>
+    <th>Concours</th> <th>Statut</th> <th>Total écrit</th> <th>Moyenne écrit</th> <th>Rang écrit</th> <th>Barre écrit</th> <th>Total général</th> <th>Moyenne générale</th> <th>Rang général</th>
+    </tr>
+
+      <tr> <td>Concours Mines-Télécom</td>  <td>{{data[0]}}</td>  <td>{{data[1]}}</td>  <td>{{data[2]}}</td>  <td>{{data[3]}}</td>  <td>{{data[4]}}</td>  <td>{{data[5]}}</td>   <td>{{data[6]}}</td> <td>{{data[7]}}</td> </tr>
+
+  </table>
+  <br />
+  <br />
+  <!-- Table des résultats écrits au concours Mines-Telecom -->
+  <h2> Détail des matières écrites passées pour le concours Mines-Télécom</h2>
+  <div id="flexTableGraph">
+  <table id ="notesEcrites">
+
+    <tr>
+      <th>Matière</th>       <th>Note écrite</th>                    <!-- Entêtes de la table -->
+    </tr>
+
+    {% for item in ecrit %}
+
+      <tr>
+
+      {% for attribute in item %}
+        <td> {{attribute}}</td>             <!-- Cellules qui contiennent les données -->
+
+      {% endfor %}
+
+      </tr>
+
+    {% endfor %}
+
+  </table>
+  <img src="{{url_for('static', filename='graphs/graph_notes.png')}}" alt ="Graphique des notes du candidat">
+  </div>
+
+  <!-- Table des résultats oraux au concours Mines-Telecom -->
+  {% if oral != [] %}
+  <h2> Détails des matières orales passées pour le concours Mines-Télécom</h2>
+  <table>
+
+    <tr>
+      <th>Matière</th>       <th>Note orale</th>                    <!-- Entêtes de la table -->
+    </tr>
+
+    {% for item in oral %}
+
+      <tr>
+
+      {% for attribute in item %}
+        <td> {{attribute}}</td>             <!-- Cellules qui contiennent les données -->
+
+      {% endfor %}
+
+      </tr>
+
+    {% endfor %}
+  {% endif %}
+  </table>
+
+  <!-- Pour chaque concours spécifique passé par l'étudiant, on affiche une table contenant les notes -->
+
+  {% if concours_data %}
+  <div id = "flextables">
+    {% for concours in concours_data %}
+    <div class = "flextitleandtable">
+      <h3> {{concours[0]}} </h3>
+        <table class = "table_notes">
+
+          <tr><th>Matière</th> <th>Note</th></tr>
+          {% for data in concours[1] %}
+
+            <tr> <td> {{data[0]}} </td> <td>  {{data[1]}}</td></tr>
+          {% endfor %}
+        </table>
+      </div>
+      {% endfor %}
+  </div>
+  {% endif %}
+
+  <br /> <br /> <br />
+{% else %}
+<img src="../static/images/message_pas_de_note.JPG" class="pasVoeux">
+{% endif %}
+{% endblock %}

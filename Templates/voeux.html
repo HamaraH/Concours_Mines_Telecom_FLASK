@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h2>{% block title %}{{display_title}}{% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+
+{% if data %}
+  <div class="toPdf"> <!--  Bouton d'export PDF -->
+    <form class="formPdf" action = "/toPDF" method = "POST">
+      <input class ="PDF" name = "voeux" type="submit" value = "PDF">
+    </form>
+  </div>
+
+  {% if rang %}  <!-- Si l'étudiant a un rang, alors on l'affiche-->
+  <h3> Votre rang général : {{rang}}</h3>
+  {% endif %}
+
+
+
+  <table>
+
+    <tr>
+
+    {% for title in headers%}
+      <th>{{title}}</th>                     <!-- Entêtes de la table -->
+    {% endfor %}
+
+    </tr>
+
+    {% for item in data %}
+
+      <tr>
+
+      {% for attribute in item %}
+        <td> {{attribute}}</td>             <!-- Cellules qui contiennent les données -->
+
+      {% endfor %}
+
+      </tr>
+
+    {% endfor %}
+
+  </table>
+
+{% endif %}
+
+{% if not data %}
+
+  <img src="static/images/pasDeVoeux.jpg" alt="l'image de la deg" class ="pasVoeux">
+
+{% endif %}
+
+<br />
+<br />
+<br />
+
+{% endblock %}

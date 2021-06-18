@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h2>{% block title %}Statistiques du concours{% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+<br />
+
+{% if not liste_label_img_ecrites %}
+  <h3>Veuillez sélectionner une filière</h3>  <!-- Sous titre ne s'affiche que si on n'a pas filtré par filiere-->
+{% endif %}
+
+<div id = "flexbuttons" style = "display: flex; width:80%; margin:auto;">  <!-- Boutons permettant de filtrer par filiere -->
+
+  {% for elem in buttons%}
+
+    <form style = "flex: 1 1 auto; width: 10%;" action="/stats" method="POST">
+      <input  class = "buttons" type="submit" name="filiere"  class="buttons" value={{elem}} />
+    </form>
+
+  {% endfor %}
+
+</div>
+
+<br /> <br />
+
+{% if liste_label_img_ecrites %}
+  <h2> Notes Ecrites </h2>
+{% endif %}
+
+{% if table_data_ecrite %}   <!-- Table résumée des statistiques écrites -->
+
+  <table>
+    {% for header in headers %}
+      <th>{{header}}</th>
+    {% endfor %}
+
+    {% for ligne in table_data_ecrite %}
+      <tr>
+      {% for info in ligne %}
+        <td>{{info}}</td>
+      {% endfor %}
+      </tr>
+    {% endfor %}
+
+  </table>
+
+{% endif %}
+
+<br /> <br />
+
+<div class = "statsImg">     <!-- Balise contenant toutes les images de statistiques écrites -->
+
+  {% for label in liste_label_img_ecrites %} <!-- Pour chaque matiere-->
+    <img src="{{label}}" alt = "Graphique de statistiques">  <!-- Graph de statistiques écrites -->
+  {% endfor %}
+
+</div>
+
+{% if liste_label_img_orales %}
+  <h2> Notes Orales </h2>
+{% endif %}
+
+{% if table_data_orale %}    <!-- Table résumée des statistiques orales -->
+
+  <table>
+    {% for header in headers %}
+      <th>{{header}}</th>
+    {% endfor %}
+
+    {% for ligne in table_data_orale %}
+      <tr>
+      {% for info in ligne %}
+        <td>{{info}}</td>
+      {% endfor %}
+      </tr>
+    {% endfor %}
+
+  </table>
+
+{% endif %}
+
+<br /> <br />
+
+<div class = "statsImg">   <!-- Statistiques des notes orales -->
+
+  {% for label in liste_label_img_orales %}
+    <img src="{{label}}" alt = "Graphique de statistiques">
+  {% endfor %}
+
+</div>
+
+{% endblock %}

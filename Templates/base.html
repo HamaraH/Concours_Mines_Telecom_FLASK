@@ -1,0 +1,112 @@
+<!doctype html>
+<title>{% block title %}{% endblock %}CMT</title>
+
+{% block head %}
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">  <!-- CSS principal -->
+<meta charset="UTF-8">
+<base href="http://127.0.0.1:5000/">
+{% endblock %}
+
+<header>   <!-- Bandeau supérieur : image MT + informations du candidat lors de la connexion -->
+    <div id ="headerFlex">
+
+        <img id = "concoursMT" src = "static/images/LogoConcours.jpg" alt = "Image du concours MT">
+            {% if session['typeCompte'] == "student" %}
+            <div id ="candidatInfos">
+                <p> {{ session['nom'] }}</p>
+                <p> {{ session['prenom'] }}</p>
+                <p> {{ session['username'] }}</p>
+                <p> {{ session['filiere'] }}</p>
+            </div>
+        {% endif %}
+    </div>
+</header>
+
+<nav>
+     {% if session['username'] %}
+
+         {% if session['typeCompte'] == "teacher" %}   <!-- Navbar personnel administratif -->
+
+             <a href="/listeEleve">
+                Candidats inscrits
+             </a>
+
+             <a href="/listeIntegration">
+                Intégration
+             </a>
+
+             <a href="/stats">
+                Statistiques du concours
+             </a>
+
+        {% else %}                                     <!-- Navbar candidat -->
+
+             <a href="/notes">
+                 Mes notes
+             </a>
+
+              <a href="/ecoles">
+                  Ecoles disponibles
+             </a>
+
+             <a href="/dossier">
+                 Mon dossier
+             </a>
+
+             <a href="/voeux">
+                 Mes voeux
+             </a>
+
+             <a href="/stats">
+                Statistiques du concours
+             </a>
+
+        {% endif %}
+
+        <!-- Onglets de la navbar en commun -->
+
+         <a href="/deconnexion">
+             Se déconnecter
+         </a>
+
+     {% else %} <!-- Onglets lorqu'on n'est pas connecté-->
+
+          <a href="login"> Connexion</a>
+          <a href="register"> Créer un compte</a>
+
+     {% endif %}
+</nav>
+
+
+<section class="content">
+    {% if not connected %} <!-- Informations affichées sur la page d'accueil en mode déconnecté-->
+  <header>
+    {% block header %}{% endblock %}
+  </header>
+
+  {% block content %}
+    <h4>
+      Si vous êtes un personnel administratif ou un enseignant, il est nécessaire de vous devez créer un compte afin de consulter les données du concours. Veuillez pour cela utiliser l'onglet "Créer un compte" ci-dessus !
+    </h4>
+    <br />
+    <h4>
+        Si vous êtes un étudiant, vous pouvez directement vous rendre sur l'onglet "Connexion" et vous connecter à l'aide de votre numéro de candidat et du mot de passe qui vous a été attribué par mail.
+    </h4>
+
+    <div id="slider">  <!-- Carousel -->
+        <figure>
+            <img src="{{ url_for('static', filename='images/carousel1.jpg') }}">
+            <img src="{{ url_for('static', filename='images/carousel2.jpg') }}">   <!-- Images contenant le texte du carousel -->
+            <img src="{{ url_for('static', filename='images/carousel3.jpg') }}">
+        </figure>
+    </div>
+
+    {% endblock %}
+
+
+
+    {% else %}  <!-- Lorsqu'on est connecté, le site affiche les logos des écoles -->
+        <img id ="listeEcoles" src="static/images/liste_ecoles.png" alt = "Liste des écoles du concours MT">
+    {% endif %}
+
+</section>

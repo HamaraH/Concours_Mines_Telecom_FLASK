@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+<!-- Template utilisé afin 1) qu'un élève consulte ses informations et les puisse les modifier 2) qu'un personnel administratif consulte les informations d'un élève -->
+{% block header %}
+  <h2>{% block title %}Dossier étudiant{% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+  <br />
+  <form action ="/dossier" method="post">
+
+     <!-- Le personnel administratif ne doit pas être capable de modifier les informations dans les inputs : readonly sous conditions -->
+
+    <input name="nom"  type = "text" id="nom" value = "{{data[0][0]}}" required {% if teacherView %}  readonly {% endif %}>
+    <input name="prenom" id="prenom"  value = "{{data[0][1]}}" required>
+    <input placeholder = "Autres prénoms" name="autres_prenoms"  type = "text" id="autres_prenoms" value = "{{data[0][2]}}" {% if teacherView %}  readonly {% endif %}>
+    <input name="date_naissance" id="date_naissance"  value = "{{data[0][3]}}" required {% if teacherView %}  readonly {% endif %}>
+    <input name="adresse"  type = "text" id="adresse" value = "{{data[0][4]}}" required {% if teacherView %}  readonly {% endif %}>
+    <input placeholder = "Complément d'adresse" type = "text" name="complement_adresse" id="complement_adresse"   {% if data[0][5] is not none %} value = "{{data[0][5]}}" {% endif %} {% if teacherView %}  readonly {% endif %}>
+    <input name="code_postal"  type = "text" id="code_postal" value = "{{data[0][6]}}" required {% if teacherView %}  readonly {% endif %}>
+    <input name="numero_portable" id="numero_portable"  type = "text" value = "{{data[0][7]}}" required {% if teacherView %}  readonly {% endif %}>
+    <input placeholder = "Numéro de téléphone fixe" name="numero_fixe"  type = "text" id="numero_fixe"  {% if data[0][8] is not none %} value = "{{data[0][8]}}" {% endif %} {% if teacherView %}  readonly {% endif %}>
+    <input name="mail" id="mail" type = "email" value = "{{data[0][9]}}" required {% if teacherView %}  readonly {% endif %}>
+    <input placeholder = "INE" name="INE" id="INE"   {% if data[0][11] is not none %} value = "{{data[0][11]}}" {% endif %} {% if teacherView %}  readonly {% endif %}>
+    <input placeholder = "dossier" name = "dossier" id = "dossier" value = "{{data[0][12]}}" readonly>
+    <input placeholder = "Qualité" name = "qualite" id = "qualite" value = "{{data[0][13]}}" readonly>
+    <input placeholder = "Filière" name = "filiere" id = "filiere" value = "{{data[0][14]}}" readonly>
+    <input placeholder = "CSP père" name = "CSPP" id = "CSPP" value = "{{data[0][15]}}" readonly>
+    <input placeholder = "CSP mère" name = "CSPM" id = "CSPM" value = "{{data[0][16]}}" readonly>
+
+  </form>
+
+<br />
+{% if not ATS %}
+    <!-- Affichage des infos du bac -->
+    <h3>Informations concernant le baccalauréat</h3>
+
+        <table>
+            <tr> {% for header in headersBAC%}
+                <th>{{header}}</th>
+                {% endfor %}
+            </tr>
+            {% for ligne in baccalaureat %}
+                <tr>
+                    {% for info in ligne %}
+                    <td>{{info}}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+
+    <br />
+    <!-- Affichage des infos de prépa -->
+    <h3>Informations concernant le parcours CPGE</h3>
+        <table>
+            <tr> {% for header in headersCPGE %}
+                <th>{{header}}</th>
+                {% endfor %}
+                {% for option in options %}
+                <th>Option</th>
+                {% endfor %}
+            </tr>
+            <tr>
+            {% for info in CPGE %}
+                    <td>{{info}}</td>
+            {% endfor %}
+            {% for o in options %}
+            <td>{{o}}</td>
+            {% endfor %}
+            </tr>
+
+        </table>
+
+    <br /> <br /> <br />
+{% if ecrit %}
+    <!-- Affichage des notes obtenues par le candidat -->
+    <h3> Notes obtenues par le candidat</h3>
+
+    <!--Table contenant les infos du concours MT -->
+    <table>
+      <tr>
+      <th>Concours</th> <th>Statut</th> <th>Total écrit</th> <th>Moyenne écrit</th> <th>Rang écrit</th> <th>Barre écrit</th> <th>Total général</th> <th>Moyenne générale</th> <th>Rang général</th>
+      </tr>
+
+        <tr> <td>Concours Mines-Télécom</td>  <td>{{data2[0]}}</td>  <td>{{data2[1]}}</td>  <td>{{data2[2]}}</td>  <td>{{data2[3]}}</td>  <td>{{data2[4]}}</td>  <td>{{data2[5]}}</td>   <td>{{data2[6]}}</td> <td>{{data2[7]}}</td> </tr>
+
+    </table>
+
+    <br />
+    <br />
+    <!-- Table des résultats écrits au concours Mines-Telecom -->
+    <h2> Détail des matières écrites passées pour le concours Mines-Télécom</h2>
+    <div id="flexTableGraph">
+    <table id ="notesEcrites">
+
+      <tr>
+        <th>Matière</th>       <th>Note écrite</th>                    <!-- Entêtes de la table -->
+      </tr>
+
+      {% for item in ecrit %}
+
+        <tr>
+
+        {% for attribute in item %}
+          <td> {{attribute}}</td>             <!-- Cellules qui contiennent les données -->
+
+        {% endfor %}
+
+        </tr>
+
+      {% endfor %}
+
+    </table>
+    <img src="{{url_for('static', filename='graphs/graph_notes.png')}}" alt ="Graphique des notes du candidat">
+    </div>
+{% endif %}
+    <!-- Table des résultats oraux au concours Mines-Telecom -->
+    {% if oral != [] %}
+    <h2> Détails des matières orales passées pour le concours Mines-Télécom</h2>
+    <table>
+
+      <tr>
+        <th>Matière</th>       <th>Note orale</th>                    <!-- Entêtes de la table -->
+      </tr>
+
+      {% for item in oral %}
+
+        <tr>
+
+        {% for attribute in item %}
+          <td> {{attribute}}</td>             <!-- Cellules qui contiennent les données -->
+
+        {% endfor %}
+
+        </tr>
+
+      {% endfor %}
+    {% endif %}
+    </table>
+
+    <!-- Pour chaque concours spécifique passé par l'étudiant, on affiche une table contenant les notes -->
+
+    {% if liste_concours != [] %}
+
+        <div id = "flextables">
+          {% for concours in liste_concours %}
+              <div class = "flextitleandtable">
+                <h3> {{concours[0]}} </h3>
+
+                <table class = "table_notes">
+                    <tr><th>Matière</th> <th>Note</th></tr>
+
+                    {% for matiere in concours_data[0] %}
+                      <tr> <td> {{matiere[0]}} </td> <td>  {{matiere[1]}}</td></tr>
+                    {% endfor %}
+                </table>
+
+              </div>
+            {% endfor %}
+        </div>
+
+    {% endif %}
+{% endif %}
+
+<br /> <br /> <br />
+{% endblock %}
