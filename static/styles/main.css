@@ -1,0 +1,256 @@
+h1{
+    color:white;
+    width:80%;
+    margin:auto;
+    text-align: center;
+    height:100%;
+    padding-bottom: 0.5%;
+    padding-top: 0.5%;
+}
+
+#concoursMT{
+    margin: 0.5% 72% 0.5% 10%;
+}
+
+header{
+    background-color: #179fdb;
+    height: 10%;
+}
+
+nav{
+    width:100%;
+    overflow: hidden;
+    background-color: #FFF;
+    margin:0;
+    height:8%;
+    box-shadow: 0 8px 6px -6px black;
+
+}
+
+nav a {
+    float:left;
+    color:black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    height:100%;
+    font-family: Montserrat, "Helvetica Neue", sans-serif;
+}
+
+nav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+body{
+    margin:0;
+}
+
+.content{
+    height:150px;
+
+}
+section header h2{
+    background-color: white;
+    width:60%;
+    margin:auto;
+    margin-top: 1%;
+    margin-bottom: 4%;
+    text-align: center;
+    font-family: Montserrat, "Helvetica Neue", sans-serif;
+}
+
+section header{
+    background-color: white;
+}
+#flexbuttons{
+    display: flex;
+    flex-wrap: wrap;
+    width:100%;
+    margin-top: 0;
+    align-items: center;
+}
+
+#flexbuttons button{
+     flex: 0.5 0.5 10ch !important;
+     margin-top: 0;
+}
+
+section form{
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    margin:auto;
+
+}
+
+section form input{
+    flex: 1 1 10ch;
+    margin: .5rem;
+    border: none;
+    background: hsl(0, 0% ,93%);
+    border-radius: .25rem;
+    padding: .75rem 1rem;
+    font-family: Montserrat, "Helvetica Neue", sans-serif;
+}
+
+section form input[type="submit"] {
+    background: #8cc341;
+    color: white;
+    box-shadow: 0 .75rem .5rem -.5rem hsl(0, 50%, 80%);
+    font-family: Montserrat, "Helvetica Neue", sans-serif;
+}
+
+section form input[type="email"] {
+    flex: 3 1 30ch;
+}
+
+#username{
+    flex: 3 1 30ch;
+}
+
+
+section h4{
+    width:82%;
+    margin:auto;
+    font-size: 23px;
+    margin-top: 2%;
+    text-align: center;
+    font-family: Montserrat, "Helvetica Neue", sans-serif;
+}
+
+table{
+    width:80%;
+    margin: auto;
+    border:1px solid #EEEEEE;
+    margin-top: 0.5%;
+    border-collapse: collapse;
+}
+
+th{
+    background-color: #02639c;
+    color:white;
+    text-transform: uppercase;
+    font-size: 20px;
+    padding:0.5%;
+    font-family: Montserrat, "Helvetica Neue", sans-serif;
+}
+
+td{
+    text-align: center;
+    border:1px solid gray;
+    font-size: 20px;
+    font-family: Montserrat, "Helvetica Neue", sans-serif;
+}
+
+h2{
+    width:80%;
+    margin:auto;
+    text-align: center;
+    font-family: Montserrat, "Helvetica Neue", sans-serif;
+}
+
+#flextables{
+    display: flex;
+    flex-flow: row wrap;
+    width: 90%;
+    margin: auto;
+}
+
+.table_notes{
+    border:1px solid #EEEEEE;
+    margin-top: 2%;
+    border-collapse: collapse;
+}
+
+.flextitleandtable{
+    width: 30%;
+}
+
+h3{
+    text-align: center;
+    font-family: Montserrat, "Helvetica Neue", sans-serif;
+}
+
+#flexTableGraph{
+    display: flex;
+    flex-flow: row wrap;
+    width: 90%;
+    margin: auto;
+}
+
+#notesEcrites{
+    width:50%;
+    margin-top: 5%;
+}
+.toPdf{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.formPdf{
+    width: 5%;
+    margin:0 2% 0 0;
+}
+
+.statsImg{
+    width: 35%;
+    margin: auto;
+    margin-bottom: 5%;
+}
+
+.PDF{
+     background-color: #bd1515 !important;
+}
+
+#headerFlex{
+    display:flex;
+    width:100%;
+}
+
+#candidatInfos{
+    color:white;
+}
+
+#candidatInfos p{
+    margin:8% 0% 4%;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: Montserrat, "Helvetica Neue", sans-serif;
+}
+
+.pasVoeux{
+    width: 50%;
+    margin: 5% 25% 0% 25%;
+}
+
+#listeEcoles{
+    width:50%;
+    margin: 7% 25% 25% 25%;
+}
+
+/* CSS du carrousel (bootstrap) */
+
+@keyframes slidy {
+0% { left: 0%; }     /* 0 - 30% of animation time */
+30% { left: 0%; }    /* 1st slide will be visible */
+33% { left: -100%; } /* 30% - 33% slide change will occur */
+63% { left: -100%; } /* etc.. */
+66% { left: -200%; }
+100% { left: -200%; }
+}
+
+body { margin: 0; }
+div#slider { overflow: hidden; }
+div#slider figure img { width: 20%; float: left;}
+div#slider figure {
+
+  position: relative;
+  width: 500%;
+  margin: 0;
+  left: 0;
+  font-size: 0;
+  animation: 20s slidy infinite;
+    animation-iteration-count: infinite;
+}
